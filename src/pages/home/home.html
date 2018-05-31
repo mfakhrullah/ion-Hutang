@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-navbar color='red' class="z-depth-2">
+    <ion-title>
+      MEI 2018
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <ion-fab bottom right>
+   <button ion-fab color='red' (click)="presentProfileModal();"><ion-icon name="add"></ion-icon></button>
+ </ion-fab> -->
+
+  <ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-8 col-sm>
+          <ion-item class="fontSalary">
+            <p class="salaryBold">PENDAPATAN TETAP</p>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item class="fontSalaryAmt" text-center>
+            <p class="salaryBold">2,900.00</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row class="fontKommit">
+        <ion-col col-8 col-sm>
+          <ion-item *ngFor="let p of pushKomit">
+            <ion-label>{{p}}</ion-label>
+            <ion-checkbox color='red'></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item *ngFor="let x of pushAmt" class="fontSalaryAmt" text-center>
+            <p class="amtColor">{{x}}</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-list>
+  <ion-row>
+    <ion-col col-10 col-sm>
+      <!-- //blank -->
+    </ion-col>
+    <ion-col col-2>
+      <button color='red' ion-button block (click)="presentProfileModal();"><ion-icon name="add"></ion-icon></button>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+<ion-footer class="z-depth-2">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <!-- blank -->
+        </ion-col>
+        <ion-col class="fontFooter" text-center>
+          JUMLAH:
+        </ion-col>
+        <ion-col class="fontFooter totalColor" col-4 text-center>
+          1500.00
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
