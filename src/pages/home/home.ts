@@ -11,12 +11,18 @@ import { Storage } from '@ionic/storage';
 export class HomePage {
   pushKomit: string[];
   pushAmt: string[];
+  viewBaki: string;
+  viewGaji: string;
 
   constructor(public navCtrl: NavController, private storage: Storage, public modalCtrl: ModalController) {
 
     // storage.remove('komitmen');
     // storage.remove('jumlah');
+    // this.storage.set('gaji', '2,900.00');
 
+    storage.get('gaji').then((gaji) => {
+      this.viewGaji = gaji;
+    });
     storage.get('komitmen').then((komit) => {
       if (komit == null)
         this.pushKomit = [];
@@ -29,18 +35,26 @@ export class HomePage {
       else
         this.pushAmt = jumlah;
     });
+    storage.get('baki').then((baki) => {
+      if (baki == null)
+        this.viewBaki = this.viewGaji;
+      else
+        this.viewBaki = baki;
+    });
   }
 
   presentProfileModal() {
-    let profileModal = this.modalCtrl.create(Profile);
+    let profileModal = this.modalCtrl.create(Profile, { sGaji: this.viewGaji });
     let i = 0;
 
     profileModal.onDidDismiss(data => {
       for (let x of data) {
         if (i == 0)
           this.pushKomit.push(x);
-        else
+        else if (i == 1)
           this.pushAmt.push(x);
+        else
+          this.viewBaki = x;
 
         i++;
       }

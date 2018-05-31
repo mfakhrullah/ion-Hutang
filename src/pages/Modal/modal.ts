@@ -12,9 +12,16 @@ export class Profile {
   newAmt: any;
   storedData: string[];
   storedAmt: string[];
+  storedBaki: string[];
   amtValid: boolean;
 
   constructor(params: NavParams, private storage: Storage, public viewCtrl: ViewController, private alertCtrl: AlertController) {
+    storage.get('baki').then((baki) => {
+      if (baki == null)
+        this.storedBaki = params.get('sGaji');
+      else
+        this.storedBaki = baki;
+    });
     storage.get('komitmen').then((komit) => {
       if (komit != null)
         this.storedData = komit;
@@ -45,11 +52,12 @@ export class Profile {
 
     let data = this.newKomit;
     let amt = this.newAmt;
+    let baki = '0.00';
     let amtLen = amt.length
 
     if (amtLen >= 4 || amtLen >= '4') {
-      let i;
-      amt = amt.substring(0, 1) + ',' + amt.substring(1) + '.00';
+      let i = amtLen - 3;
+      amt = amt.substring(0, i) + ',' + amt.substring(i) + '.00';
     }
 
     this.storedData.push(data);
@@ -58,7 +66,7 @@ export class Profile {
     this.storage.set('komitmen', this.storedData);
     this.storage.set('jumlah', this.storedAmt);
 
-    this.viewCtrl.dismiss([data, amt]);
+    this.viewCtrl.dismiss([data, amt, baki]);
   }
 
   amountInputValid(val) {
