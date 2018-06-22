@@ -8,6 +8,7 @@ import { NavParams, ViewController, AlertController } from 'ionic-angular';
   templateUrl: 'modal.html'
 })
 export class Modal {
+  dataArray = [];
   newKomit: any;
   newAmt: any;
   storedData: string[];
@@ -33,6 +34,10 @@ export class Modal {
         this.storedAmt = jumlah;
       else
         this.storedAmt = [];
+    });
+    storage.get('isCheck').then((isCheck) => {
+      if (isCheck != null)
+        this.dataArray = isCheck;
     });
   }
 
@@ -77,12 +82,15 @@ export class Modal {
 
     this.storedData.push(data);
     this.storedAmt.push(amt);
+    this.dataArray.push({ data: data, checked: false });
 
     this.storage.set('komitmen', this.storedData);
     this.storage.set('jumlah', this.storedAmt);
     this.storage.set('baki', sBaki);
+    this.storage.set('isCheck', this.dataArray);
 
     this.viewCtrl.dismiss([data, amt, sBaki]);
+    //dismiss(newData,newAmount,newBaki);
   }
 
   amountInputValid(val) {

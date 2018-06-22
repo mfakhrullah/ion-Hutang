@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ModalController, NavParams, AlertController } from 'ionic-angular';
+import { ModalController, NavParams } from 'ionic-angular';
 import { Modal } from '../Modal/modal';
 import { Salary } from '../Modal2/modal';
 import { Storage } from '@ionic/storage';
@@ -10,17 +10,19 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  dataArray = [];
   pushKomit: string[];
   pushAmt: string[];
   viewBaki: string;
   viewGaji: string;
   isChecked = false;
-  constructor(public navCtrl: NavController, private storage: Storage, public modalCtrl: ModalController, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private storage: Storage, public modalCtrl: ModalController) {
 
-     // storage.remove('komitmen');
-     // storage.remove('gaji');
-     // storage.remove('baki');
-     // storage.remove('jumlah');
+    // storage.remove('komitmen');
+    // storage.remove('gaji');
+    // storage.remove('baki');
+    // storage.remove('jumlah');
+    // storage.remove('isCheck');
 
     storage.get('gaji').then((gaji) => {
       if (gaji == null)
@@ -45,6 +47,11 @@ export class HomePage {
         this.viewBaki = "0.00";
       else
         this.viewBaki = baki;
+    });
+    storage.get('isCheck').then((isCheck) => {
+      if (isCheck != null)
+        this.dataArray = isCheck;
+
     });
   }
 
@@ -92,9 +99,18 @@ export class HomePage {
     this.storage.set('baki', this.viewGaji);
   }
 
-  updateChecking(value){
+  updateChecking(value, checkBox) {
+    let i = 0;
 
+    for (let dat of this.dataArray) {
+      if (dat.data == value && checkBox == false)
+        this.dataArray[i].checked = true;
+      else if (dat.data == value && checkBox == true)
+        this.dataArray[i].checked = false;
 
+      i++;
+    }
+    this.storage.set('isCheck', this.dataArray);
   }
 
 }

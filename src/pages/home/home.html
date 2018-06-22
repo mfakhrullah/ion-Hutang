@@ -34,9 +34,9 @@
     <ion-grid>
       <ion-row class="fontKommit">
         <ion-col col-8 col-sm>
-          <ion-item *ngFor="let p of pushKomit">
-            <ion-label>{{p}}</ion-label>
-            <ion-checkbox color='red' [checked]="isChecked" (ionChange)="updateChecking(p)"></ion-checkbox>
+          <ion-item *ngFor="let p of dataArray">
+            <ion-label>{{p.data}}</ion-label>
+            <ion-checkbox color='red' [checked]="p.checked" (ionChange)="updateChecking(p.data,p.checked)"></ion-checkbox>
           </ion-item>
         </ion-col>
         <ion-col col-4>
