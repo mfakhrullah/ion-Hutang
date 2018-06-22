@@ -12,28 +12,31 @@
    <button ion-fab color='red' (click)="presentProfileModal();"><ion-icon name="add"></ion-icon></button>
  </ion-fab> -->
 
-  <ion-list>
-    <ion-grid>
-      <ion-row>
-        <ion-col col-8 col-sm>
-          <ion-item class="fontSalary">
-            <p class="salaryBold">PENDAPATAN TETAP</p>
-          </ion-item>
-        </ion-col>
-        <ion-col col-4>
-          <ion-item class="fontSalaryAmt" text-center>
-            <p class="salaryBold">2,900.00</p>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-list no-lines>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-8 col-sm>
+            <ion-list-header>
+              <p class="salaryBold">PENDAPATAN TETAP</p>
+            </ion-list-header>
+          </ion-col>
+          <ion-col col-4>
+            <ion-list-header text-center>
+              <p class="salaryBold"></p>
+              <button ion-button clear item-end (click)="newSalary();">{{viewGaji}}</button>
+            </ion-list-header>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
 
     <ion-grid>
       <ion-row class="fontKommit">
         <ion-col col-8 col-sm>
           <ion-item *ngFor="let p of pushKomit">
             <ion-label>{{p}}</ion-label>
-            <ion-checkbox color='red'></ion-checkbox>
+            <ion-checkbox color='red' [checked]="isChecked" (ionChange)="updateChecking(p)"></ion-checkbox>
           </ion-item>
         </ion-col>
         <ion-col col-4>

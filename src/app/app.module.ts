@@ -6,7 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { Profile } from '../pages/Modal/modal';
+import { Modal } from '../pages/Modal/modal';
+import { Salary } from '../pages/Modal2/modal';
 
 import { IonicStorageModule } from '@ionic/storage';
 
@@ -14,7 +15,8 @@ import { IonicStorageModule } from '@ionic/storage';
   declarations: [
     MyApp,
     HomePage,
-    Profile
+    Modal,
+    Salary
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [
     MyApp,
     HomePage,
-    Profile
+    Modal,
+    Salary
   ],
   providers: [
     StatusBar,

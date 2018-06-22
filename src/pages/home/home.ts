@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ModalController, NavParams } from 'ionic-angular';
-import { Profile } from '../Modal/modal';
+import { ModalController, NavParams, AlertController } from 'ionic-angular';
+import { Modal } from '../Modal/modal';
+import { Salary } from '../Modal2/modal';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -13,15 +14,19 @@ export class HomePage {
   pushAmt: string[];
   viewBaki: string;
   viewGaji: string;
+  isChecked = false;
+  constructor(public navCtrl: NavController, private storage: Storage, public modalCtrl: ModalController, private alertCtrl: AlertController) {
 
-  constructor(public navCtrl: NavController, private storage: Storage, public modalCtrl: ModalController) {
-
-    // storage.remove('komitmen');
-    // storage.remove('jumlah');
-    // this.storage.set('gaji', '2,900.00');
+     // storage.remove('komitmen');
+     // storage.remove('gaji');
+     // storage.remove('baki');
+     // storage.remove('jumlah');
 
     storage.get('gaji').then((gaji) => {
-      this.viewGaji = gaji;
+      if (gaji == null)
+        this.viewGaji = "Tambah";
+      else
+        this.viewGaji = gaji;
     });
     storage.get('komitmen').then((komit) => {
       if (komit == null)
@@ -37,14 +42,14 @@ export class HomePage {
     });
     storage.get('baki').then((baki) => {
       if (baki == null)
-        this.viewBaki = this.viewGaji;
+        this.viewBaki = "0.00";
       else
         this.viewBaki = baki;
     });
   }
 
   presentProfileModal() {
-    let profileModal = this.modalCtrl.create(Profile, { sGaji: this.viewGaji });
+    let profileModal = this.modalCtrl.create(Modal, { sGaji: this.viewGaji });
     let i = 0;
 
     profileModal.onDidDismiss(data => {
@@ -61,6 +66,35 @@ export class HomePage {
     })
 
     profileModal.present();
+  }
+
+  newSalary() {
+    let profileModal = this.modalCtrl.create(Salary);
+    let i = 0;
+
+    profileModal.onDidDismiss(data => {
+      for (let x of data) {
+        if (i == 0)
+          this.salaryValid(x);
+
+        i++;
+      }
+    })
+
+    profileModal.present();
+  }
+
+  salaryValid(x) {
+    this.viewGaji = x + ".00";
+    this.storage.set('gaji', this.viewGaji);
+
+    this.viewBaki = this.viewGaji;
+    this.storage.set('baki', this.viewGaji);
+  }
+
+  updateChecking(value){
+
+
   }
 
 }

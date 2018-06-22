@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar color='red' class="z-depth-2">
+    <ion-title>
+      TAMBAH REKOD
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label color="kelabu" floating>PENDAPATAN TETAP</ion-label>
+    <ion-input [(ngModel)]="newSalary"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="kelabu" floating center>EPF (%)</ion-label>
+    <ion-input type="number" [(ngModel)]="newEpf"></ion-input>
+  </ion-item>
+
+  <ion-row>
+    <ion-col>
+      <!-- blank -->
+    </ion-col>
+    <ion-col>
+      <button color='red' ion-button round (click)="storeSalary();">TAMBAH</button>
+    </ion-col>
+    <ion-col>
+      <!-- blank -->
+    </ion-col>
+  </ion-row>
+</ion-content>

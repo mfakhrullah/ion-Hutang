@@ -7,12 +7,12 @@ import { NavParams, ViewController, AlertController } from 'ionic-angular';
   selector: 'page-home',
   templateUrl: 'modal.html'
 })
-export class Profile {
+export class Modal {
   newKomit: any;
   newAmt: any;
   storedData: string[];
   storedAmt: string[];
-  storedBaki: string[];
+  storedBaki: any;
   amtValid: boolean;
 
   constructor(params: NavParams, private storage: Storage, public viewCtrl: ViewController, private alertCtrl: AlertController) {
@@ -52,21 +52,37 @@ export class Profile {
 
     let data = this.newKomit;
     let amt = this.newAmt;
-    let baki = '0.00';
-    let amtLen = amt.length
+    let sBaki = this.storedBaki;
+    let amtLen = amt.length;
 
-    if (amtLen >= 4 || amtLen >= '4') {
-      let i = amtLen - 3;
+    // calculate Baki
+    sBaki = sBaki.replace(/,/g, "");
+    sBaki = sBaki.replace(".", "");
+    sBaki = sBaki / 100 - amt;
+    sBaki = sBaki.toString();
+
+    let bakiLen = sBaki.length;
+    let x = sBaki.length - 3;
+    let i = amtLen - 3;
+
+    if (amtLen >= 4 || amtLen >= '4')
       amt = amt.substring(0, i) + ',' + amt.substring(i) + '.00';
-    }
+    else
+      amt = amt + '.00';
+
+    if (bakiLen >= 4 || bakiLen >= '4')
+      sBaki = sBaki.substring(0, x) + ',' + sBaki.substring(x) + '.00';
+    else
+      sBaki = sBaki + '.00';
 
     this.storedData.push(data);
     this.storedAmt.push(amt);
 
     this.storage.set('komitmen', this.storedData);
     this.storage.set('jumlah', this.storedAmt);
+    this.storage.set('baki', sBaki);
 
-    this.viewCtrl.dismiss([data, amt, baki]);
+    this.viewCtrl.dismiss([data, amt, sBaki]);
   }
 
   amountInputValid(val) {
