@@ -89,8 +89,8 @@ export class Modal {
     this.storage.set('baki', sBaki);
     this.storage.set('isCheck', this.dataArray);
 
-    this.viewCtrl.dismiss([data, amt, sBaki]);
-    //dismiss(newData,newAmount,newBaki);
+    this.viewCtrl.dismiss([amt, sBaki]);
+    //dismiss(newAmount,newBaki);
   }
 
   amountInputValid(val) {

@@ -60,10 +60,13 @@ export class HomePage {
     let i = 0;
 
     profileModal.onDidDismiss(data => {
+      this.storage.get('isCheck').then((isCheck) => {
+        if (isCheck != null)
+          this.dataArray = isCheck;
+      });
+
       for (let x of data) {
         if (i == 0)
-          this.pushKomit.push(x);
-        else if (i == 1)
           this.pushAmt.push(x);
         else
           this.viewBaki = x;
