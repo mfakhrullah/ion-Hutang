@@ -13,8 +13,8 @@ export class HomePage {
   dataArray = [];
   pushKomit: string[];
   pushAmt: string[];
-  viewBaki: string;
-  viewGaji: string;
+  viewBaki: any;
+  viewGaji: any;
   isChecked = false;
   constructor(public navCtrl: NavController, private storage: Storage, public modalCtrl: ModalController) {
 
@@ -22,7 +22,7 @@ export class HomePage {
     // storage.remove('gaji');
     // storage.remove('baki');
     // storage.remove('jumlah');
-    // storage.remove('isCheck');
+    // storage.remove('dataObject');
 
     storage.get('gaji').then((gaji) => {
       if (gaji == null)
@@ -48,9 +48,9 @@ export class HomePage {
       else
         this.viewBaki = baki;
     });
-    storage.get('isCheck').then((isCheck) => {
-      if (isCheck != null)
-        this.dataArray = isCheck;
+    storage.get('dataObject').then((object) => {
+      if (object != null)
+        this.dataArray = object;
 
     });
   }
@@ -60,9 +60,9 @@ export class HomePage {
     let i = 0;
 
     profileModal.onDidDismiss(data => {
-      this.storage.get('isCheck').then((isCheck) => {
-        if (isCheck != null)
-          this.dataArray = isCheck;
+      this.storage.get('dataObject').then((object) => {
+        if (object != null)
+          this.dataArray = object;
       });
 
       for (let x of data) {
@@ -86,6 +86,8 @@ export class HomePage {
       for (let x of data) {
         if (i == 0)
           this.salaryValid(x);
+        else if (i == 1)
+          this.epfValid(x);
 
         i++;
       }
@@ -102,6 +104,17 @@ export class HomePage {
     this.storage.set('baki', this.viewGaji);
   }
 
+  epfValid(y) {
+    let gaji = this.viewGaji;
+    let epfVal = gaji * y / 100;
+
+    this.pushAmt.push(epfVal.toString());
+    this.dataArray.push({ data: "EPF", checked: true });
+
+    this.storage.set('jumlah', this.pushAmt);
+    this.storage.set('dataObject', this.dataArray);
+  }
+
   updateChecking(value, checkBox) {
     let i = 0;
 
@@ -113,7 +126,7 @@ export class HomePage {
 
       i++;
     }
-    this.storage.set('isCheck', this.dataArray);
+    this.storage.set('dataObject', this.dataArray);
   }
 
 }

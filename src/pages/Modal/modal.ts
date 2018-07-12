@@ -35,9 +35,9 @@ export class Modal {
       else
         this.storedAmt = [];
     });
-    storage.get('isCheck').then((isCheck) => {
-      if (isCheck != null)
-        this.dataArray = isCheck;
+    storage.get('dataObject').then((object) => {
+      if (object != null)
+        this.dataArray = object;
     });
   }
 
@@ -87,7 +87,7 @@ export class Modal {
     this.storage.set('komitmen', this.storedData);
     this.storage.set('jumlah', this.storedAmt);
     this.storage.set('baki', sBaki);
-    this.storage.set('isCheck', this.dataArray);
+    this.storage.set('dataObject', this.dataArray);
 
     this.viewCtrl.dismiss([amt, sBaki]);
     //dismiss(newAmount,newBaki);
